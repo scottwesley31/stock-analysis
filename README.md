@@ -162,6 +162,7 @@ For i = 2 To RowCount
         TickerIndex = TickerIndex + 1
     End If           
 Next i
+```
 
 The above block of code starts by summing the tickerVolumes found in the dataset and captures this value for a TickerIndex of 0. The tickerStartingPrices and tickerEndingPrices are then located for TickerIndex = 0, the TickerIndex then increases to TickerIndex = 1 once the final ticker in that group is identified. This process is repeated as it cycles through the rest of the rows.
 
