@@ -35,6 +35,11 @@ Refactored - 2017
 Refactored - 2018
 ![VBA_Challenge_2018](https://user-images.githubusercontent.com/107309793/176657990-79a1e26d-691c-4d47-98b3-14151b864e2a.png)
 
+To quickly summarize this numerically; Original - 2017 > Original 2018 > Refactored 2017 > Refactored 2018.
+
+In both cases, the 2017 runtime was slower than the 2018 runtime. The 2017 and 2018 worksheets do not consist of datasets of significantly differing size (they both consist of 3013 rows and 8 columns of data) so this somewhat negligible change in runtime may be simply due to computer resources. In reference to page 2.5.3: Measure Code Performance in Module 2, "The first time you run a macro, the elapsed time may be longer than subsequent runs because computer resources need to be allocated to run the macro. Once allocated, these resources are ready for subsequent runs." I was running the code for 2017 first before 2018 in each case which could indicate that my computer successfully allocated resources differently between runs.
+
+When comparing the original code and refactored code runtimes
 
 ## Summary
 - There is a detailed statement on the advantages and disadvantages of refactoring code in general (3 pt).
