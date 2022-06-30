@@ -222,3 +222,15 @@ Lastly refactoring can be quite challenging to execute, being that there are so 
 - There is a detailed statement on the advantages and disadvantages of the original and refactored VBA script (3 pt).
 
 How do these pros and cons apply to refactoring the original VBA script?
+
+In the context of the "All Stocks Analysis" VBA script refactoring many of these advantages and disadvantages came into play.
+
+Pros
+- Looking throught the original thoroughly and determining another way to rework it will make it easier to write a similar script involving functions like summing up a group of values parts of different groups (tickerVolumes for each ticker), identifing the first and last row of a particular group (ending/startingPrices), and utilizing a variable to iterate through arrays (tickerIndex).
+- Even though the original script was mostly put together from scratch (by working through Module 2), it was a different experience to start with a partially written script and to incorprate the missing pieces into it. It saved time in some areas and made it difficult in others.
+- Refactoring the original script clearly improved its efficiency being that the code looped through the dataset far less and overall lessened the runtime of the script.
+
+Cons
+- Diving back into the original script after putting it together and learning all of the concepts for the first time did make it feel almost like looking at a completely foreign script at first. It was challenging to understand exactly how the code worked as a whole being that the Module presented pieces of the code in small bite-sized chunks.
+- In this case, I did not run into collaboration becoming problematic; this is more of a theoretical issue that could arise in a team setting.
+- Refactoring the original "All Stocks Analysis" script was quite challenging in that it did require an understanding of how to fundamentally rewrite a nested loop into a group of separate individual (more efficient) loops. It took me a long time to fully grasph exactly how the refactored code accomplished this task but now that I've taken the time to explain/compare each script I can see clearly how they differ.
