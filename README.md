@@ -24,15 +24,19 @@ Using images and examples of your code, compare the stock performance between 20
 The results of the VBA script times for 2017 and 2018 for both the original and refactored code is as follows:
 
 Original - 2017
+
 ![VBA_Challenge_2017_Original](https://user-images.githubusercontent.com/107309793/176657849-85c66ae3-a49b-4252-a427-10f2d35f738a.png)
 
 Original - 2018
+
 ![VBA_Challenge_2018_Original](https://user-images.githubusercontent.com/107309793/176657884-07a7c720-0eeb-4519-9cf2-aaa39befae71.png)
 
 Refactored - 2017
+
 ![VBA_Challenge_2017](https://user-images.githubusercontent.com/107309793/176657940-432535c7-d718-447f-ae33-6c01ac279d78.png)
 
 Refactored - 2018
+
 ![VBA_Challenge_2018](https://user-images.githubusercontent.com/107309793/176657990-79a1e26d-691c-4d47-98b3-14151b864e2a.png)
 
 To quickly summarize this numerically; Original - 2017 > Original 2018 > Refactored 2017 > Refactored 2018.
@@ -62,11 +66,11 @@ Dim tickers(11) As String
 The startingPrice and ending Price variables are initialized (and later defined in the code).
 
 ```
-    Dim startingPrice As Single
-    Dim endingPrice As Single
+Dim startingPrice As Single
+Dim endingPrice As Single
 ```
 
-The respective year (2017 or 2018) worksheet is activated depending no the user's input prior to running the code. "yearValue" is a variable defined by the year input within an InputBox.
+The respective year (2017 or 2018) worksheet is activated depending on the user's input prior to running the code. "yearValue" is a variable defined by the year input within an InputBox.
 
 `Sheets(yearValue).Activate`
 
@@ -74,34 +78,44 @@ The number of rows to loop over is determined and defined in the variable "RowCo
 
 `RowCount = Cells(Rows.Count, "A").End(xlUp).Row`
 
-A nested loop cycles through each iterator (0 to 11) one at a time which each involve another loop which cycles through every rows (2 to RowCount). The code starts with the iterator values indicated by "i" which defines the variable "ticker" (which will be reported after each round) and initializes the totalVolume variable to zero:
+A nested loop cycles through each iterator (0 to 11) one at a time which each involve another loop which cycles through every row (2 to RowCount). The code starts with the iterator values indicated by "i" which defines the variable "ticker" and initializes the totalVolume variable to zero:
 
 ```
- For i = 0 To 11
-        ticker = tickers(i)
-        totalVolume = 0
+For i = 0 To 11
+    ticker = tickers(i)
+    totalVolume = 0
 ```
 This for loop will later be completed.
 
 The inner for loop cycles through all of the rows (2 through 3013) and calculates the totalVolume, locates the startingPrice, and locates the endingPrice for the respective "ticker" with the following code:
 
 ```
-            For j = 2 To RowCount
+    For j = 2 To RowCount
             
-            If Cells(j, 1).Value = ticker Then
-              totalVolume = totalVolume + Cells(j, 8).Value
-            End If
+        If Cells(j, 1).Value = ticker Then
+            totalVolume = totalVolume + Cells(j, 8).Value
+        End If
    
-            If Cells(j - 1, 1).Value <> ticker And Cells(j, 1).Value = ticker Then
-              startingPrice = Cells(j, 6).Value
-            End If
+        If Cells(j - 1, 1).Value <> ticker And Cells(j, 1).Value = ticker Then
+            startingPrice = Cells(j, 6).Value
+        End If
             
-            If Cells(j + 1, 1).Value <> ticker And Cells(j, 1).Value = ticker Then
-              endingPrice = Cells(j, 6).Value
-            End If
+        If Cells(j + 1, 1).Value <> ticker And Cells(j, 1).Value = ticker Then
+            endingPrice = Cells(j, 6).Value
+        End If
         
-            Next j        
+    Next j        
 ```
+The code then outputs the ticker, totalVolume, and utizes the startingPrice and endingPrice to calculate "return". This output is printed in a newly activated worksheet called "All Stocks Analysis" each time a new iterator is cycled through. This output is completed 12 times (0 to 11).
+
+```
+    Worksheets("All Stocks Analysis").Activate
+        Cells(4 + i, 1).Value = ticker
+        Cells(4 + i, 2).Value = totalVolume
+        Cells(4 + i, 3).Value = endingPrice / startingPrice - 1
+Next i
+```
+
 ## Summary
 - There is a detailed statement on the advantages and disadvantages of refactoring code in general (3 pt).
 
