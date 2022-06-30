@@ -43,7 +43,9 @@ To quickly summarize this numerically; Original - 2017 > Original 2018 > Refacto
 
 In both cases, the 2017 runtime was slower than the 2018 runtime. The 2017 and 2018 worksheets do not consist of datasets of significantly differing size (they both consist of 3013 rows and 8 columns of data) so this somewhat negligible change in runtime may be simply due to computer resources. In reference to page 2.5.3: Measure Code Performance in Module 2, "The first time you run a macro, the elapsed time may be longer than subsequent runs because computer resources need to be allocated to run the macro. Once allocated, these resources are ready for subsequent runs." I was running the code for 2017 first before 2018 in each case which could indicate that my computer successfully allocated resources differently between runs.
 
-When comparing the original code and refactored code runtimes, it's clear that the refactored code runs quicker overall for both the 2017 and 2018 dataset. This is simply due to how the code is structured. In the original script, the code utilizes a nested loop. It directs the computer to loop through every row of data 12 different times, collecting the variables we care about (totalVolume, startingPrice, endingPrice) and then outputting the value of these variables onto a new worksheet in between each of these runs. To walk through some of the most relevant code:
+When comparing the original code and refactored code runtimes, it's clear that the refactored code runs quicker overall for both the 2017 and 2018 dataset. This is simply due to how the code is structured.
+
+In the original script, the code utilizes a nested loop. It directs the computer to loop through every row of data 12 different times, collecting the variables we care about (totalVolume, startingPrice, endingPrice) and then outputting the value of these variables onto a new worksheet in between each of these runs. To walk through some of the most relevant code:
 
 An array called "tickers" is initialized to categorize each different stock ticker:
 
@@ -106,7 +108,7 @@ The inner for loop cycles through all of the rows (2 through 3013) and calculate
         
     Next j        
 ```
-The code then outputs the ticker, totalVolume, and utizes the startingPrice and endingPrice to calculate "return". This output is printed in a newly activated worksheet called "All Stocks Analysis" each time a new iterator is cycled through. This output is completed 12 times (0 to 11).
+The code then outputs the ticker, totalVolume, and utilizes the startingPrice and endingPrice to calculate "return". This output is printed in a newly activated worksheet called "All Stocks Analysis" each time a new iterator is cycled through. This output is completed 12 times (0 to 11).
 
 ```
     Worksheets("All Stocks Analysis").Activate
@@ -114,6 +116,85 @@ The code then outputs the ticker, totalVolume, and utizes the startingPrice and 
         Cells(4 + i, 2).Value = totalVolume
         Cells(4 + i, 3).Value = endingPrice / startingPrice - 1
 Next i
+```
+Note: This walkthrough of the original script does not include the separate subroutine which formats the table of data outputted into the "All Stocks Analysis" worksheet.
+
+Moving on to the refactored script - this script does not utilize a nested for loop. The code utilizes 4 separate for loops; one that initialize each variable to a value of 0, another to cycle through all of the rows and to calculate tickerVolumes, tickerStartingPrices, and tickerEndingPrices, another loop to output data into the "All Stocks Analysis" worksheet, and lasly a for loop built to format the data outputted into the "All Stocks Analysis" worksheet. The loop which collects the data for tickerVolumes, tickerStartingPrices, and tickerEndingPrices only has to loop through rows 2 to 3013 ONE TIME. This significantly reduces the runtime.
+
+To break down what the code is doing:
+
+The "tickers" array is defined in the same way as outlined above.
+The corresponding dataset is activated in same fashion (with an InputBox).
+The RowCount variable is the same.
+
+A new variable defined as "TickerIndex" is set to zero. This variable is key for references the tickers array in subsequent code without having to check unnecessary rows not pertaining to the ticker of interest.
+
+`TickerIndex = 0`
+
+The volumes, starting/ending prices variables are now defined as arrays also involving 12 indices:
+
+```
+Dim tickerVolumes(12) As Long  
+Dim tickerStartingPrices(12) As Single   
+Dim tickerEndingPrices(12) As Single
+```
+All of these arrays are initialized to a value of zero using a for loop (0 to 11)
+
+```
+For i = 0 To 11
+    tickerVolumes(i) = 0
+    tickerStartingPrices(i) = 0
+    tickerEndingPrices(i) = 0
+Next i
+```
+The code loops over all of the rows in the spreadsheet once, increasing the TickerIndex by 1 once the last ticker of that index is identified (i.e. the data collected for tickers(0) is stored after moving through its row, then the data for tickers(1) is stored after going through its rows, etc.):
+
+```
+For i = 2 To RowCount
+    tickerVolumes(TickerIndex) = tickerVolumes(TickerIndex) + Cells(i, 8).Value
+    
+    If Cells(i - 1, 1).Value <> tickers(TickerIndex) Then
+        tickerStartingPrices(TickerIndex) = Cells(i, 6).Value
+    End If
+    
+    If Cells(i + 1, 1).Value <> tickers(TickerIndex) Then
+        tickerEndingPrices(TickerIndex) = Cells(i, 6).Value
+        TickerIndex = TickerIndex + 1
+    End If           
+Next i
+
+The above block of code starts by summing the tickerVolumes found in the dataset and captures this value for a TickerIndex of 0. The tickerStartingPrices and tickerEndingPrices are then located for TickerIndex = 0, the TickerIndex then increases to TickerIndex = 1 once the final ticker in that group is identified. This process is repeated as it cycles through the rest of the rows.
+
+The "All Stocks Analysis" worksheet is activated only once and all of the data collected from the previous for loop is outputted at once using the following code:
+
+```
+For i = 0 To 11
+    Worksheets("All Stocks Analysis").Activate
+        Cells(4 + i, 1).Value = tickers(i)
+        Cells(4 + i, 2).Value = tickerVolumes(i)
+        Cells(4 + i, 3).Value = tickerEndingPrices(i) / tickerStartingPrices(i) - 1
+Next i
+```
+Lastly, this code includes a formatting block which is included in the overall runtime for the script.
+
+```
+Worksheets("All Stocks Analysis").Activate
+    Range("A3:C3").Font.FontStyle = "Bold"
+    Range("A3:C3").Borders(xlEdgeBottom).LineStyle = xlContinuous
+    Range("B4:B15").NumberFormat = "#,##0"
+    Range("C4:C15").NumberFormat = "0.0%"
+    Columns("B").AutoFit
+
+    dataRowStart = 4
+    dataRowEnd = 15
+
+    For i = dataRowStart To dataRowEnd
+        If Cells(i, 3) > 0 Then
+            Cells(i, 3).Interior.Color = vbGreen
+        Else
+            Cells(i, 3).Interior.Color = vbRed
+        End If
+    Next i
 ```
 
 ## Summary
