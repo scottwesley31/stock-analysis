@@ -12,8 +12,12 @@ Module 2 - VBA Scripting
 ## Overview of Project
 - The purpose and background are well defined (2 pt).
 
+After completing a workbook that includes a VBA script which analyses two different worksheets containing stock data from the years 2017 and 2018 respectively, Steve (a client) wants the VBA script refactored. He specificies that the code does not run quickly enough which could be problematic for datasets involving thousands of stocks. The purpose of refactoring the code is to figure out a way to loop through all of the data one time rather than looping through the same dataset multiple times which is how the original VBA script stands.
+
 ## Results
 - The analysis is well described with screenshots and code (4 pt).
+
+
 
 ## Summary
 - There is a detailed statement on the advantages and disadvantages of refactoring code in general (3 pt).
