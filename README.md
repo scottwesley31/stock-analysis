@@ -39,8 +39,69 @@ To quickly summarize this numerically; Original - 2017 > Original 2018 > Refacto
 
 In both cases, the 2017 runtime was slower than the 2018 runtime. The 2017 and 2018 worksheets do not consist of datasets of significantly differing size (they both consist of 3013 rows and 8 columns of data) so this somewhat negligible change in runtime may be simply due to computer resources. In reference to page 2.5.3: Measure Code Performance in Module 2, "The first time you run a macro, the elapsed time may be longer than subsequent runs because computer resources need to be allocated to run the macro. Once allocated, these resources are ready for subsequent runs." I was running the code for 2017 first before 2018 in each case which could indicate that my computer successfully allocated resources differently between runs.
 
-When comparing the original code and refactored code runtimes
+When comparing the original code and refactored code runtimes, it's clear that the refactored code runs quicker overall for both the 2017 and 2018 dataset. This is simply due to how the code is structured. In the original script, the code utilizes a nested loop. It directs the computer to loop through every row of data 12 different times, collecting the variables we care about (totalVolume, startingPrice, endingPrice) and then outputting the value of these variables onto a new worksheet in between each of these runs. To walk through some of the most relevant code:
 
+An array called "tickers" is initialized to categorize each different stock ticker:
+
+```
+Dim tickers(11) As String
+
+    tickers(0) = "AY"
+    tickers(1) = "CSIQ"
+    tickers(2) = "DQ"
+    tickers(3) = "ENPH"
+    tickers(4) = "FSLR"
+    tickers(5) = "HASI"
+    tickers(6) = "JKS"
+    tickers(7) = "RUN"
+    tickers(8) = "SEDG"
+    tickers(9) = "SPWR"
+    tickers(10) = "TERP"
+    tickers(11) = "VSLR"
+```
+The startingPrice and ending Price variables are initialized (and later defined in the code).
+
+```
+    Dim startingPrice As Single
+    Dim endingPrice As Single
+```
+
+The respective year (2017 or 2018) worksheet is activated depending no the user's input prior to running the code. "yearValue" is a variable defined by the year input within an InputBox.
+
+`Sheets(yearValue).Activate`
+
+The number of rows to loop over is determined and defined in the variable "RowCount".
+
+`RowCount = Cells(Rows.Count, "A").End(xlUp).Row`
+
+A nested loop cycles through each iterator (0 to 11) one at a time which each involve another loop which cycles through every rows (2 to RowCount). The code starts with the iterator values indicated by "i" which defines the variable "ticker" (which will be reported after each round) and initializes the totalVolume variable to zero:
+
+```
+ For i = 0 To 11
+        ticker = tickers(i)
+        totalVolume = 0
+```
+This for loop will later be completed.
+
+The inner for loop cycles through all of the rows (2 through 3013) and calculates the totalVolume, locates the startingPrice, and locates the endingPrice for the respective "ticker" with the following code:
+
+```
+            For j = 2 To RowCount
+            
+            If Cells(j, 1).Value = ticker Then
+              totalVolume = totalVolume + Cells(j, 8).Value
+            End If
+   
+            If Cells(j - 1, 1).Value <> ticker And Cells(j, 1).Value = ticker Then
+              startingPrice = Cells(j, 6).Value
+            End If
+            
+            If Cells(j + 1, 1).Value <> ticker And Cells(j, 1).Value = ticker Then
+              endingPrice = Cells(j, 6).Value
+            End If
+        
+            Next j        
+```
 ## Summary
 - There is a detailed statement on the advantages and disadvantages of refactoring code in general (3 pt).
 
