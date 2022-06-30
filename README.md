@@ -19,7 +19,7 @@ After completing a workbook that includes a VBA script which analyses two differ
 ## Results
 - The analysis is well described with screenshots and code (4 pt).
 
-Using images and examples of your code, compare the stock performance between 2017 and 2018, as well as the execution times of the origina script and the refacotred script.
+Using images and examples of your code, compare the stock performance between 2017 and 2018, as well as the execution times of the origina script and the refactored script.
 
 The results of the VBA script times for 2017 and 2018 for both the original and refactored code is as follows:
 
@@ -202,6 +202,22 @@ Worksheets("All Stocks Analysis").Activate
 - There is a detailed statement on the advantages and disadvantages of refactoring code in general (3 pt).
 
 What are the advantages or disadvantages of refactoring code?
+
+Some of the advantages of refactoring code are that it presents an opportunity for process improvement, the code doesn't need to be worked out from scratch, and it helps improve the efficiency of a useful script.
+
+Having the opportunity to look thoroughly at an original script with the goal of improving the code can generally help with the process of writing subsequent scripts. With some of the cumbersome coding worked out in the refactored code, these mistakes can be avoided in the future and new and helpful patterns can be incorpated into the code.
+
+From a collaborative perspective, refactoring code does not necessarily involve the original creation of the script from scratch which gives others involved in editing the code an opportunity to look at code from a fresh/external perspective. This can again help with process improvement along with the next point - 
+
+Refactoring helps improve the efficiency of the original script. The script very well may function utilizing less computer resources after it's been reworked.
+
+Some disadvantages of refactoring code are that it can be difficult to fully grasp the inner workings of the code initially, that too many collaborators could disrupt the original scripts function, and that it can be challenging to determine exactly how to change the code.
+
+Jumping into a script that is completely new can make it difficult to understand exactly how it all fits together and how elements such as variables, arrays, iterators, and loops all work together. This could be avoided with thorough communication between the developer of the code and the person responsible for reworking it.
+
+Despite the beauty of collaboration, sometimes it's possible to have "too many cooks in the kitchen". The presentation of multiple ideas from various sources on how to rework code may pull away from its foundational structure and purpose. This could be avoided with very specific goals in mind on how to improve the code.
+
+Lastly refactoring can be quite challenging to execute, being that there are so many different ways to tell a computer to complete the same task. It's definitely not always easy to fix something that isn't necessarily broken.
 
 - There is a detailed statement on the advantages and disadvantages of the original and refactored VBA script (3 pt).
 
