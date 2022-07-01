@@ -7,7 +7,7 @@ After completing a workbook that includes a VBA script which analyses two differ
 
 ## Results
 
-##Compare Performance Between 2017 & 2018
+### Compare Performance Between 2017 & 2018
 
 Looking at the overall "All Stocks Analysis" tables for each of the indicated years, it's clear that more stocks generated a higher (or positive) return in 2017.
 
@@ -21,7 +21,7 @@ Stock Performance - 2018
 
 Looking more closely at the data most of the stocks dropped in returns from 2017-2018. Only 2 stocks remained profitable (ENPH and RUN). One stock in particular did not perform well in both years (TERP). These conclusions are easy to see visually with the conditional formatting built into the "Return" column.
 
-##Execution Times of Original vs. Refactored Script
+## Execution Times of Original vs. Refactored Script
 
 The results of the VBA script times for 2017 and 2018 for both the original and refactored code is as follows:
 
@@ -46,6 +46,8 @@ To quickly summarize this numerically; Original - 2017 > Original 2018 > Refacto
 In both cases, the 2017 runtime was slower than the 2018 runtime. The 2017 and 2018 worksheets do not consist of datasets of significantly differing size (they both consist of 3013 rows and 8 columns of data) so this somewhat negligible change in runtime may be simply due to computer resources. In reference to page 2.5.3: Measure Code Performance in Module 2, "The first time you run a macro, the elapsed time may be longer than subsequent runs because computer resources need to be allocated to run the macro. Once allocated, these resources are ready for subsequent runs." I was running the code for 2017 first before 2018 in each case which could indicate that my computer successfully allocated resources differently between runs.
 
 When comparing the original code and refactored code runtimes, it's clear that the refactored code runs quicker overall for both the 2017 and 2018 dataset. This is simply due to how the code is structured.
+
+### Original Script
 
 In the original script, the code utilizes a nested loop. It directs the computer to loop through every row of data 12 different times, collecting the variables we care about (totalVolume, startingPrice, endingPrice) and then outputting the value of these variables onto a new worksheet in between each of these runs. To walk through some of the most relevant code:
 
@@ -120,6 +122,8 @@ The code then outputs the ticker, totalVolume, and utilizes the startingPrice an
 Next i
 ```
 Note: This walkthrough of the original script does not include the separate subroutine which formats the table of data outputted into the "All Stocks Analysis" worksheet.
+
+### Refactored Script
 
 Moving on to the refactored script - this script does not utilize a nested for loop. The code utilizes 4 separate for loops; one that initialize each variable to a value of 0, another to cycle through all of the rows and to calculate tickerVolumes, tickerStartingPrices, and tickerEndingPrices, another loop to output data into the "All Stocks Analysis" worksheet, and lasly a for loop built to format the data outputted into the "All Stocks Analysis" worksheet. The loop which collects the data for tickerVolumes, tickerStartingPrices, and tickerEndingPrices only has to loop through rows 2 to 3013 ONE TIME. This significantly reduces the runtime.
 
@@ -201,9 +205,8 @@ Worksheets("All Stocks Analysis").Activate
 ```
 
 ## Summary
-- There is a detailed statement on the advantages and disadvantages of refactoring code in general (3 pt).
 
-What are the advantages or disadvantages of refactoring code?
+### Advantages of Refactoring Code
 
 Some of the advantages of refactoring code are that it presents an opportunity for process improvement, the code doesn't need to be worked out from scratch, and it helps improve the efficiency of a useful script.
 
@@ -213,6 +216,8 @@ From a collaborative perspective, refactoring code does not necessarily involve 
 
 Refactoring helps improve the efficiency of the original script. The script very well may function utilizing less computer resources after it's been reworked.
 
+### Disadvantages of Refactoring Code
+
 Some disadvantages of refactoring code are that it can be difficult to fully grasp the inner workings of the code initially, that too many collaborators could disrupt the original scripts function, and that it can be challenging to determine exactly how to change the code.
 
 Jumping into a script that is completely new can make it difficult to understand exactly how it all fits together and how elements such as variables, arrays, iterators, and loops all work together. This could be avoided with thorough communication between the developer of the code and the person responsible for reworking it.
@@ -221,18 +226,16 @@ Despite the beauty of collaboration, sometimes it's possible to have "too many c
 
 Lastly refactoring can be quite challenging to execute, being that there are so many different ways to tell a computer to complete the same task. It's definitely not always easy to fix something that isn't necessarily broken.
 
-- There is a detailed statement on the advantages and disadvantages of the original and refactored VBA script (3 pt).
-
-How do these pros and cons apply to refactoring the original VBA script?
+### Pros of Refactoring the "All Stocks Analysis" VBA Script
 
 In the context of the "All Stocks Analysis" VBA script refactoring many of these advantages and disadvantages came into play.
 
-Pros
 - Looking throught the original thoroughly and determining another way to rework it will make it easier to write a similar script involving functions like summing up a group of values parts of different groups (tickerVolumes for each ticker), identifing the first and last row of a particular group (ending/startingPrices), and utilizing a variable to iterate through arrays (tickerIndex).
 - Even though the original script was mostly put together from scratch (by working through Module 2), it was a different experience to start with a partially written script and to incorprate the missing pieces into it. It saved time in some areas and made it difficult in others.
 - Refactoring the original script clearly improved its efficiency being that the code looped through the dataset far less and overall lessened the runtime of the script.
 
-Cons
+### Cons of Refactoring the "All Stocks Analysis" VBA Script
+
 - Diving back into the original script after putting it together and learning all of the concepts for the first time did make it feel almost like looking at a completely foreign script at first. It was challenging to understand exactly how the code worked as a whole being that the Module presented pieces of the code in small bite-sized chunks.
 - In this case, I did not run into collaboration becoming problematic; this is more of a theoretical issue that could arise in a team setting.
 - Refactoring the original "All Stocks Analysis" script was quite challenging in that it did require an understanding of how to fundamentally rewrite a nested loop into a group of separate individual (more efficient) loops. It took me a long time to fully grasph exactly how the refactored code accomplished this task but now that I've taken the time to explain/compare each script I can see clearly how they differ.
