@@ -1,25 +1,27 @@
-# stock-analysis
+# Stock Analysis
 Module 2 - VBA Scripting
-# The written analysis contains the following structure, organization, and formatting:
-
-- There is a title, and there are multiple paragraphs (2 pt).
-- Each paragraph has a heading (2 pt).
-- There are subheadings to break up text (2 pt).
-- Links are working, and images are formatted and displayed where appropriate (2 pt).
-# Analysis Requirements (12 points)
-- The written analysis has the following:
 
 ## Overview of Project
-- The purpose and background are well defined (2 pt).
-
-Explain the purpose of this analysis
 
 After completing a workbook that includes a VBA script which analyses two different worksheets containing stock data from the years 2017 and 2018 respectively, Steve (a client) wants the VBA script refactored. He specificies that the code does not run quickly enough which could be problematic for datasets involving thousands of stocks. The purpose of refactoring the code is to figure out a way to loop through all of the data one time rather than looping through the same dataset multiple times which is how the original VBA script stands.
 
 ## Results
-- The analysis is well described with screenshots and code (4 pt).
 
-Using images and examples of your code, compare the stock performance between 2017 and 2018, as well as the execution times of the origina script and the refactored script.
+##Compare Performance Between 2017 & 2018
+
+Looking at the overall "All Stocks Analysis" tables for each of the indicated years, it's clear that more stocks generated a higher (or positive) return in 2017.
+
+Stock Performance - 2017
+
+![Stock_Performance_2017](https://user-images.githubusercontent.com/107309793/176797571-8eaf5edc-05ab-4cfe-8bf1-f178feb54005.png)
+
+Stock Performance - 2018
+
+![Stock_Performance_2018](https://user-images.githubusercontent.com/107309793/176797596-7b73d77a-9490-40e6-9117-8b976c494c81.png)
+
+Looking more closely at the data most of the stocks dropped in returns from 2017-2018. Only 2 stocks remained profitable (ENPH and RUN). One stock in particular did not perform well in both years (TERP). These conclusions are easy to see visually with the conditional formatting built into the "Return" column.
+
+##Execution Times of Original vs. Refactored Script
 
 The results of the VBA script times for 2017 and 2018 for both the original and refactored code is as follows:
 
